@@ -1,0 +1,34 @@
+# docker-compose.yml
+
+version: '2'
+services:
+  server:
+    image: postgrest:5.2.0
+    ports:
+      - "3000:3000"
+    links:
+      - db:db
+    user: postgrest
+    environment:
+      PGRST_DB_URI: postgres://iotpower:PTM_POSTGRES_DB_PASSWORD@db:5432/iotpower
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: iotpower #In production this role should not be the same as the one used for the connection
+    # command: static_postgrest_nix_store_path/bin/postgrest
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    build: PTM_POSTGRES_DOCKER_BUILD_PATH
+    ports:
+      - "5432:5432"
+    user: postgres
+    environment:
+      POSTGRES_DB: iotpower
+      POSTGRES_USER: iotpower
+      POSTGRES_PASSWORD: PTM_POSTGRES_DB_PASSWORD
+    command: postgres -c 'timezone=Asia/Shanghai'
+    # Uncomment this if you want to persist the data.
+    volumes:
+      - "ptm_postgres_data_path:/var/lib/postgresql/data"
+      - "ptm_postgrest_sql_init_path:/docker-entrypoint-initdb.d"
+    restart: unless-stopped
