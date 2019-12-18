@@ -13,4 +13,5 @@ set +u
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-nix-build -A postgrest-docker ${SCRIPT_ABS_PATH}/nix/default.nix
+nix-shell ${SCRIPT_ABS_PATH}/nix/shell.nix
+nix-build -A MY_SUB_PROJECT_NAME-docker ${SCRIPT_ABS_PATH}/nix/default.nix

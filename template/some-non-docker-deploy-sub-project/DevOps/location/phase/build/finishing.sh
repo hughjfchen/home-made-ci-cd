@@ -15,4 +15,5 @@ set +u
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-tar zPcf ./postgrest-5.2.0-for-site.tar.gz $(nix-store --query --requisites ${SCRIPT_ABS_PATH}/../../../../result)
+[[ -e ./MY_SUB_PROJECT_NAME.tar.gz ]] && rm -fr ./MY_SUB_PROJECT_NAME.tar.gz
+tar zPcf ./MY_SUB_PROJECT_NAME.tar.gz $(nix-store --query --requisites ${SCRIPT_ABS_PATH}/../../../../result)

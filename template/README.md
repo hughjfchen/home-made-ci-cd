@@ -1,3 +1,3 @@
-#[[project]] HomeMade CI/CD Infrastructure
+# HomeMade CI/CD Infrastructure Template
 
-This is a CI/CD infrastructure homemade based on bash shell script.
+This is a CI/CD infrastructure tempalte and will be used as a starting point for the init script.

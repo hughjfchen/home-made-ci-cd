@@ -8,4 +8,4 @@ fi
 
 init_with_root_or_sudo "$0"
 
-sudo tar zPxf ./postgrest-5.2.0.tar.gz
+sudo tar zPxf ./MY_SUB_PROJECT_NAME.tar.gz

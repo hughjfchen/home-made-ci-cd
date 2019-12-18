@@ -10,4 +10,4 @@ init_with_root_or_sudo "$0"
 
 echo "Clean up the tarball"
 
-rm -fr ./postgrest-5.2.0-for-site.tar.gz
+rm -fr ./MY_SUB_PROJECT_NAME.tar.gz

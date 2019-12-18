@@ -8,39 +8,22 @@ fi
 
 init_with_root_or_sudo "$0"
 
-if [ -d /var/postgrest ]; then
-    echo "/var/postgrest directory found, delete it..."
-    sudo rm -fr /var/postgrest
-fi
-
-if [ -d /var/postgres/data ]; then
-    echo "/var/postgres data directory found, delete whole /var/postgres..."
-    sudo rm  -fr /var/postgres
+if [ -d /var/MY_SUB_PROJECT_NAME ]; then
+    echo "/var/MY_SUB_PROJECT_NAME directory found, delete it..."
+    sudo rm -fr /var/MY_SUB_PROJECT_NAME
 fi
 
 set +e
-myUser2=$(awk -F":" '{print $1}' /etc/passwd | grep -w postgrest)
+myUser2=$(awk -F":" '{print $1}' /etc/passwd | grep -w MY_SUB_PROJECT_NAME)
 if [ "X${myUser2}" != "X" ]; then
-    echo "postgrest user defined, delete it..."
-    sudo userdel -fr postgrest
+    echo "MY_SUB_PROJECT_NAME user defined, delete it..."
+    sudo userdel -fr MY_SUB_PROJECT_NAME
 fi
 
-myGroup2=$(awk -F":" '{print $1}' /etc/group | grep -w postgrest)
+myGroup2=$(awk -F":" '{print $1}' /etc/group | grep -w MY_SUB_PROJECT_NAME)
 if [ "X${myGroup2}" != "X" ]; then
-    echo "postgrest group defined, delete it..."
-    sudo groupdel -f postgrest
-fi
-
-myUser1=$(awk -F":" '{print $1}' /etc/passwd | grep -w postgres)
-if [ "X${myUser1}" != "X" ]; then
-    echo "postgres user defined, delete it..."
-    sudo userdel -fr postgres
-fi
-
-myGroup1=$(awk -F":" '{print $1}' /etc/group | grep -w postgres)
-if [ "X${myGroup1}" != "X" ]; then
-    echo "postgres group defined, delete it..."
-    sudo groupdel -f postgres
+    echo "MY_SUB_PROJECT_NAME group defined, delete it..."
+    sudo groupdel -f MY_SUB_PROJECT_NAME
 fi
 set -e
 

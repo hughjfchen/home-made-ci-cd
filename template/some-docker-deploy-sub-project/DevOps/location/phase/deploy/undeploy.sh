@@ -8,4 +8,4 @@ fi
 
 init_with_root_or_sudo "$0"
 
-sg docker -c "docker-compose -f /var/postgrest/docker-compose-postgrest.yml down"
+sg docker -c "docker-compose -f /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml down"

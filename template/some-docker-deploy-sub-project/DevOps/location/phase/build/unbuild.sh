@@ -13,4 +13,4 @@ set +u
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-echo "Nothing to do for postgrest unbuild phase. Done"
+echo "Nothing to do for MY_SUB_PROJECT_NAME unbuild phase. Done"

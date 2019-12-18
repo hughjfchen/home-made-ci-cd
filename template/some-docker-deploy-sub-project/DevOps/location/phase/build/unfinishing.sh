@@ -8,4 +8,4 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to do for unfinishing. Done"
+echo "Nothing to do for MY_SUB_PROJECT_NAME unfinishing. Done"

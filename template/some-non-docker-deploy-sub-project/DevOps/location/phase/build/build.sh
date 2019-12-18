@@ -13,4 +13,5 @@ set +u
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-nix-build -A static-postgrest ${SCRIPT_ABS_PATH}/nix/default.nix
+nix-shell ${SCRIPT_ABS_PATH}/nix/shell.nix
+nix-build -A static-MY_SUB_PROJECT_NAME ${SCRIPT_ABS_PATH}/nix/default.nix

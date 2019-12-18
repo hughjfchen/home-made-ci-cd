@@ -8,8 +8,8 @@ fi
 
 init_with_root_or_sudo "$0"
 
-if [ ! -e ${SCRIPT_ABS_PATH}/../../../../postgrest-5.2.0.tar.gz ]; then
-    echo "no postgrest tarball found, make sure you build it and pack it as a tarball with its dependencies"
+if [ ! -e ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.tar.gz ]; then
+    echo "no MY_SUB_PROJECT_NAME tarball found, make sure you build it and pack it as a tarball with its dependencies"
     exit 1
 fi
 
@@ -36,52 +36,29 @@ case ${THE_DISTRIBUTION_ID} in
        ;;
 esac
 
-PTM_POSTGRES_DB_PASSWORD="Passw0rd"
-PTM_POSTGRES_DOCKER_BUILD_PATH="${SCRIPT_ABS_PATH}"
-ptm_postgres_data_path="/var/postgres/data"
-ptm_postgrest_sql_init_path="${SCRIPT_ABS_PATH}/sql"
+MY_SUB_PROJECT_NAME_data_path="/var/MY_SUB_PROJECT_NAME/data"
+MY_SUB_PROJECT_NAME_config_path="/var/MY_SUB_PROJECT_NAME/config"
 
 set +e
-myGroup1=$(awk -F":" '{print $1}' /etc/group | grep -w postgres)
-set -e
-if [ "X${myGroup1}" = "X" ]; then
-    echo "no postgres group defined yet, create it..."
-    sudo groupadd -f --gid 999 postgres
-fi
-
-set +e
-myUser1=$(awk -F":" '{print $1}' /etc/passwd | grep -w postgres)
-set -e
-if [ "X${myUser1}" = "X" ]; then
-    echo "no postgres user defined yet, create it..."
-    sudo useradd -m -p ${PTM_POSTGRES_DB_PASSWORD} --uid 999 --gid 999 postgres
-fi
-
-set +e
-myGroup2=$(awk -F":" '{print $1}' /etc/group | grep -w postgrest)
+myGroup2=$(awk -F":" '{print $1}' /etc/group | grep -w MY_SUB_PROJECT_NAME)
 set -e
 if [ "X${myGroup2}" = "X" ]; then
-    echo "no postgrest group defined yet, create it..."
-    sudo groupadd -f --gid 90001 postgrest
+    echo "no MY_SUB_PROJECT_NAME group defined yet, create it..."
+    sudo groupadd -f --gid 90001 MY_SUB_PROJECT_NAME
 fi
 
 set +e
-myUser2=$(awk -F":" '{print $1}' /etc/passwd | grep -w postgrest)
+myUser2=$(awk -F":" '{print $1}' /etc/passwd | grep -w MY_SUB_PROJECT_NAME)
 set -e
 if [ "X${myUser2}" = "X" ]; then
-    echo "no postgrest user defined yet, create it..."
-    sudo useradd -m -p Passw0rd --uid 90001 --gid 90001 postgrest
+    echo "no MY_SUB_PROJECT_NAME user defined yet, create it..."
+    sudo useradd -m -p Passw0rd --uid 90001 --gid 90001 MY_SUB_PROJECT_NAME
 fi
 
-if [ ! -d ${ptm_postgres_data_path} ]; then
-    echo "no ${ptm_postgres_data_path} directory found, create it..."
-    sudo mkdir -p ${ptm_postgres_data_path}
-    sudo chown -R postgres:postgres ${ptm_postgres_data_path}/..
-fi
-
-if [ ! -d /var/postgrest ]; then
-    echo "no /var/postgrest directory found, create it..."
-    sudo mkdir -p /var/postgrest
-    sudo chown -R postgrest:postgrest /var/postgrest
+if [ ! -d /var/MY_SUB_PROJECT_NAME ]; then
+    echo "no /var/MY_SUB_PROJECT_NAME directory found, create it..."
+    sudo mkdir -p /var/MY_SUB_PROJECT_NAME/data
+    sudo mkdir -p /var/MY_SUB_PROJECT_NAME/config
+    sudo chown -R MY_SUB_PROJECT_NAME:MY_SUB_PROJECT_NAME /var/MY_SUB_PROJECT_NAME
 fi
 

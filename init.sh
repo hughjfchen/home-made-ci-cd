@@ -97,3 +97,62 @@ init_without_root_or_sudo () {
     THE_DISTRIBUTION_ID=$(echo ${THE_DISTRIBUTION_ID_VERSION}|awk '{print $1}')
     THE_DISTRIBUTION_VERSION=$(echo ${THE_DISTRIBUTION_ID_VERSION}|awk '{print $2}')
 }
+
+usage_and_exit () {
+            echo "Usage: init.sh [top <location> <phase>| sub-docker <sub project name to deploy on docker> <location> <phase>| sub-non-docker <sub project name to deploy with tarball> <location> <phase>]"
+            exit 1
+}
+
+set +u
+SCRIPT_ABS_PATH=$(turn_to_absolute_path $0)
+case $1 in
+    top) [[ "X$2" = "X" ]] && usage_and_exit
+         [[ "X$3" = "X" ]] && usage_and_exit
+         [[ ! -d ./DevOps/common ]] && (mkdir -p ./DevOps/common ; cp -R ${SCRIPT_ABS_PATH}/template/DevOps/common/* ./DevOps/common/)
+         mkdir -p ./DevOps/"$2"/"$3"
+         cp -R ${SCRIPT_ABS_PATH}/template/DevOps/location/phase/* ./DevOps/"$2"/"$3"/
+         ;;
+    sub-docker)
+        [[ "X$2" = "X" ]] && usage_and_exit
+        [[ "X$3" = "X" ]] && usage_and_exit
+        [[ "X$4" = "X" ]] && usage_and_exit
+        [[ ! -d ./DevOps/common ]] && (mkdir -p ./DevOps/common ; cp -R ${SCRIPT_ABS_PATH}/template/some-docker-deploy-sub-project/DevOps/common/* ./DevOps/common/)
+        mkdir -p ./DevOps/"$3"/"$4"
+        cp -R ${SCRIPT_ABS_PATH}/template/some-docker-deploy-sub-project/DevOps/location/phase/* ./DevOps/"$3"/"$4"/
+        for FILE_TO_SED in $(grep -R MY_SUB_PROJECT_NAME ./DevOps/*|awk -F":" '{print $1}'|sort|uniq)
+        do
+            sed -i.bak.for.sed.inplace.edit "s/MY_SUB_PROJECT_NAME/$2/g" ${FILE_TO_SED}
+            rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
+        done
+        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ]; then
+            sed -i.bak.for.sed.inplace.edit "/nix-build/d" ./DevOps/"$3"/"$4"/build/build.sh
+            rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
+        else
+            sed -i.bak.for.sed.inplace.edit "/nix-shell/d" ./DevOps/"$3"/"$4"/build/build.sh
+            rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
+        fi
+        ;;
+    sub-non-docker) 
+        [[ "X$2" = "X" ]] && usage_and_exit
+        [[ "X$3" = "X" ]] && usage_and_exit
+        [[ "X$4" = "X" ]] && usage_and_exit
+        [[ ! -d ./DevOps/common ]] && (mkdir -p ./DevOps/common ; cp -R ${SCRIPT_ABS_PATH}/template/some-non-docker-deploy-sub-project/DevOps/common/* ./DevOps/common/)
+        mkdir -p ./DevOps/"$3"/"$4"
+        cp -R ${SCRIPT_ABS_PATH}/template/some-non-docker-deploy-sub-project/DevOps/location/phase/* ./DevOps/"$3"/"$4"/
+        for FILE_TO_SED in $(grep -R MY_SUB_PROJECT_NAME ./DevOps/*|awk -F":" '{print $1}'|sort|uniq)
+        do
+            sed -i.bak.for.sed.inplace.edit "s/MY_SUB_PROJECT_NAME/$2/g" ${FILE_TO_SED}
+            rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
+        done
+        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ]; then
+            sed -i.bak.for.sed.inplace.edit "/nix-build/d" ./DevOps/"$3"/"$4"/build/build.sh
+            rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
+        else
+            sed -i.bak.for.sed.inplace.edit "/nix-shell/d" ./DevOps/"$3"/"$4"/build/build.sh
+            rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
+        fi
+        ;;
+    *) usage_and_exit
+        ;;
+esac
+set -u

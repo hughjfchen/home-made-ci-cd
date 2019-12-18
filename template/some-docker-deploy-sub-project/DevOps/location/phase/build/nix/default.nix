@@ -8,23 +8,8 @@ let
           "${compiler}" = pkgs.haskell.packages."${compiler}".override {
             overrides = haskellPackagesNew: haskellPackagesOld: rec {
 
-              hasql-pool =
-                haskellPackagesNew.callPackage ./hasql-pool.nix { };
-
-              hasql-transaction =
-                haskellPackagesNew.callPackage ./hasql-transaction.nix { };
-
-              hasql =
-                haskellPackagesNew.callPackage ./hasql.nix { };
-
-              jose =
-                haskellPackagesNew.callPackage ./jose.nix { };
-
-              swagger2 =
-                haskellPackagesNew.callPackage ./swagger2.nix { };
-
-              postgrest =
-                haskellPackagesNew.callPackage ./postgrest.nix { };
+              MY_SUB_PROJECT_NAME =
+                haskellPackagesNew.callPackage ./MY_SUB_PROJECT_NAME.nix { };
             };
           };
         };
@@ -36,84 +21,56 @@ let
 
   inherit (pkgs) dockerTools stdenv buildEnv writeText;
 
-  postgrest = pkgs.haskell.packages.${compiler}.postgrest;
+  MY_SUB_PROJECT_NAME = pkgs.haskell.packages.${compiler}.MY_SUB_PROJECT_NAME;
 
-  static-postgrest = pkgs.haskell.lib.justStaticExecutables pkgs.haskell.packages.${compiler}.postgrest;
+  static-MY_SUB_PROJECT_NAME = pkgs.haskell.lib.justStaticExecutables pkgs.haskell.packages.${compiler}.MY_SUB_PROJECT_NAME;
 
   passwd = ''
     root:x:0:0::/root:/run/current-system/sw/bin/bash
-    postgrest:x:90001:90001::/var/empty:/run/current-system/sw/bin/nologin
+    MY_SUB_PROJECT_NAME:x:90001:90001::/var/empty:/run/current-system/sw/bin/nologin
   '';
 
   group = ''
     root:x:0:
     nogroup:x:65534:
-    postgrest:x:90001:postgrest
+    MY_SUB_PROJECT_NAME:x:90001:MY_SUB_PROJECT_NAME
   '';
 
   nsswitch = ''
     hosts: files dns myhostname mymachines
   '';
 
-  postgrestconf = ''
-    db-uri = "$(PGRST_DB_URI)"
-    db-schema = "$(PGRST_DB_SCHEMA)"
-    db-anon-role = "$(PGRST_DB_ANON_ROLE)"
-    db-pool = "$(PGRST_DB_POOL)"
-    db-extra-search-path = "$(PGRST_DB_EXTRA_SEARCH_PATH)"
-
-    server-host = "$(PGRST_SERVER_HOST)"
-
-    server-port = "$(PGRST_SERVER_PORT)"
-
-    server-proxy-uri = "$(PGRST_SERVER_PROXY_URI)"
-    jwt-secret = "$(PGRST_JWT_SECRET)"
-    secret-is-base64 = "$(PGRST_SECRET_IS_BASE64)"
-    jwt-aud = "$(PGRST_JWT_AUD)"
-    role-claim-key = "$(PGRST_ROLE_CLAIM_KEY)"
-
-    max-rows = "$(PGRST_MAX_ROWS)"
-    pre-request = "$(PGRST_PRE_REQUEST)" 
+  MY_SUB_PROJECT_NAME-conf = ''
+    para1 = "$(PARA1)"
+    para2 = "$(PARA2)"
   '';
 
-  postgrest-env = stdenv.mkDerivation {
-    name = "postgrest-env";
+  MY_SUB_PROJECT_NAME-env = stdenv.mkDerivation {
+    name = "MY_SUB_PROJECT_NAME-env";
     phases = [ "installPhase" "fixupPhase" ];
 
     installPhase = ''
-      mkdir -p $out/etc/postgrest
-      echo '${postgrestconf}' > $out/etc/postgrest/postgrest.conf
+      mkdir -p $out/etc/MY_SUB_PROJECT_NAME
+      echo '${MY_SUB_PROJECT_NAME-conf}' > $out/etc/MY_SUB_PROJECT_NAME/MY_SUB_PROJECT_NAME.conf
       echo '${passwd}' > $out/etc/passwd
       echo '${group}' > $out/etc/group
       echo '${nsswitch}' > $out/etc/nsswitch.conf
     '';
   };
 
-  postgrest-docker =  pkgs.dockerTools.buildImage {
-  name = "postgrest";
+  MY_SUB_PROJECT_NAME-docker =  pkgs.dockerTools.buildImage {
+  name = "MY_SUB_PROJECT_NAME";
   tag = "5.2.0";
   
-  contents = [ static-postgrest
-               postgrest-env ];
+  contents = [ static-MY_SUB_PROJECT_NAME
+               MY_SUB_PROJECT_NAME-env ];
   config = {
     Env = [ 
-    "PGRST_DB_URI="
-    "PGRST_DB_SCHEMA=public"
-    "PGRST_DB_ANON_ROLE="
-    "PGRST_DB_POOL=100"
-    "PGRST_DB_EXTRA_SEARCH_PATH=public"
-    "PGRST_SERVER_HOST=*4"
-    "PGRST_SERVER_PORT=3000"
-    "PGRST_SERVER_PROXY_URI="
-    "PGRST_JWT_SECRET="
-    "PGRST_SECRET_IS_BASE64=false"
-    "PGRST_JWT_AUD="
-    "PGRST_MAX_ROWS="
-    "PGRST_PRE_REQUEST="
-    "PGRST_ROLE_CLAIM_KEY=.role"
+    "PARA1="
+    "PARA2="
     ];
-    User = "postgrest";
-    Cmd = [ "${static-postgrest}/bin/postgrest" "/etc/postgrest/postgrest.conf" ];
+    User = "MY_SUB_PROJECT_NAME";
+    Cmd = [ "${static-MY_SUB_PROJECT_NAME}/bin/MY_SUB_PROJECT_NAME" "/etc/MY_SUB_PROJECT_NAME/MY_SUB_PROJECT_NAME.conf" ];
     ExposedPorts = {
       "5432/tcp" = {};
     };
@@ -124,7 +81,7 @@ let
   };
 };
 in  {
-  inherit postgrest;
-  inherit static-postgrest;
-  inherit postgrest-docker;
+  inherit MY_SUB_PROJECT_NAME;
+  inherit static-MY_SUB_PROJECT_NAME;
+  inherit MY_SUB_PROJECT_NAME-docker;
 }

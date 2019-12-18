@@ -8,4 +8,4 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to do for xxx unpreparation in build phase. Done"
+echo "Nothing to do for MY_SUB_PROJECT_NAME unpreparation in build phase. Done"

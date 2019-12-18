@@ -8,4 +8,4 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "The top level folder is only a container for other sub projects. Nothing to unfinishing for itself. Done."
+echo "Nothing for MY_SUB_PROJECT_NAME unfinishing. Done."
