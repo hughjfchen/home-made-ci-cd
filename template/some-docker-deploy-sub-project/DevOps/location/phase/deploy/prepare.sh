@@ -41,5 +41,8 @@ if [ ! -d /var/MY_SUB_PROJECT_NAME ]; then
     sudo chown -R MY_SUB_PROJECT_NAME:MY_SUB_PROJECT_NAME /var/MY_SUB_PROJECT_NAME
 fi
 
-sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_path:${MY_SUB_PROJECT_NAME_path}:g\" < ${SCRIPT_ABS_PATH}/docker-compose.yml > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME 
-sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_data_path:${MY_SUB_PROJECT_NAME_data_path}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
+MY_SUB_PROJECT_NAME_IMAGE_ID=$(docker images|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')
+cmdPath=$(docker image inspect ${MY_SUB_PROJECT_NAME_IMAGE_ID} | grep "/nix/store/" | awk -F"/" '{print "/nix/store/"$4}')
+sudo su -p -c "sed \"s:static_MY_SUB_PROJECT_NAME_nix_store_path:${cmdPath}:g\" < ${SCRIPT_ABS_PATH}/docker-compose.yml > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME
+sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_config_path:${MY_SUB_PROJECT_NAME_config_path}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAEM.yml.01 > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02" MY_SUB_PROJECT_NAME 
+sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_data_path:${MY_SUB_PROJECT_NAME_data_path}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02 > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
