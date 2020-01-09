@@ -8,42 +8,27 @@ fi
 
 init_with_root_or_sudo "$0"
 
-${SCRIPT_ABS_PATH}/prepare.sh
-${SCRIPT_ABS_PATH}/build/prepare.sh
+begin_banner "Top level" "Cont. Build"
 
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/build/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/build/unbuild.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/build/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/build/prepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/build/build.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/build/finishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/finishing.sh
+warn "Nothing can be filled by default, you must build the top level CB pipeline yourself."
+warn "Refer to the cb.sh for some example"
 
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/build/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/build/unbuild.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/build/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/build/prepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/build/build.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/build/finishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/finishing.sh
+#${SCRIPT_ABS_PATH}/prepare.sh
+#${SCRIPT_ABS_PATH}/build/prepare.sh
 
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/build/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/build/unbuild.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/build/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/build/prepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/build/build.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/build/finishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/finishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/build/unfinishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/build/unbuild.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/build/unprepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/unfinishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/unprepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/build/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/build/build.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/build/finishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/finishing.sh
 
-${SCRIPT_ABS_PATH}/build/build.sh
-${SCRIPT_ABS_PATH}/build/finishing.sh
-${SCRIPT_ABS_PATH}/finishing.sh
+#${SCRIPT_ABS_PATH}/build/build.sh
+#${SCRIPT_ABS_PATH}/build/finishing.sh
+#${SCRIPT_ABS_PATH}/finishing.sh
+
+done_banner "Top level" "Cont. Build"

@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to untest for MY_SUB_PROJECT_NAME. Done."
+begin_banner "MY_SUB_PROJECT_NAME" "test untest"
+
+done_banner "MY_SUB_PROJECT_NAME" "test untest"

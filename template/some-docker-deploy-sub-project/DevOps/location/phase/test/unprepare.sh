@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to test unprepare for MY_SUB_PROJECT_NAME. Done"
+begin_banner "MY_SUB_PROJECT_NAME" "test unprepare"
+
+done_banner "MY_SUB_PROJECT_NAME" "test unprepare"

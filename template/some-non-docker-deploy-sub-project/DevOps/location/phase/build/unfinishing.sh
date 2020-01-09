@@ -8,6 +8,10 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Clean up the tarball"
+begin_banner "MY_SUB_PROJECT_NAEM" "build unfinishing"
 
-rm -fr ./MY_SUB_PROJECT_NAME.tar.gz
+info "Clean up the tarball"
+
+rm -fr ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.tar.gz
+
+done_banner "MY_SUB_PROJECT_NAEM" "build unfinishing"

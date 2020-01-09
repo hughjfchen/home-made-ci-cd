@@ -8,4 +8,8 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "How to do integration test? I'm thinking..."
+begin_banner "MY_SUB_PROJECT_NAME" "test prepare"
+
+info "How to do integration test for MY_SUB_PROJECT_NAME test preparation? I'm thinking..."
+
+done_banner "MY_SUB_PROJECT_NAME" "test prepare"

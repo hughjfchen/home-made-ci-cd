@@ -8,4 +8,8 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Currently, nothing to do. In the future, maybe add some start/stop script for non-docker deployment"
+begin_banner "MY_SUB_PROJECT_NAME" "deploy finishing"
+
+info "Currently, nothing to do for MY_SUB_PROJECT_NAME deploy finishing. In the future, maybe add some start/stop script for non-docker deployment"
+
+done_banner "MY_SUB_PROJECT_NAME" "deploy finishing"

@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "How to do integration test? I'm thinking..."
+begin_banner "Top level" "test prepare"
+
+done_banner "Top level" "test prepare"

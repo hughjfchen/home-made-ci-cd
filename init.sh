@@ -124,7 +124,17 @@ case $1 in
             sed -i.bak.for.sed.inplace.edit "s/MY_SUB_PROJECT_NAME/$2/g" ${FILE_TO_SED}
             rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
         done
-        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ]; then
+        for FILE_TO_SED in $(grep -R MY_LOCATION_NAME ./DevOps/*|awk -F":" '{print $1}'|sort|uniq)
+        do
+            sed -i.bak.for.sed.inplace.edit "s/MY_LOCATION_NAME/$3/g" ${FILE_TO_SED}
+            rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
+        done
+        for FILE_TO_SED in $(grep -R MY_PHASE_NAME ./DevOps/*|awk -F":" '{print $1}'|sort|uniq)
+        do
+            sed -i.bak.for.sed.inplace.edit "s/MY_PHASE_NAME/$4/g" ${FILE_TO_SED}
+            rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
+        done
+        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ] && [ -e ./"$2".cabal ]; then
             sed -i.bak.for.sed.inplace.edit "/nix-build/d" ./DevOps/"$3"/"$4"/build/build.sh
             rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
         else
@@ -144,7 +154,17 @@ case $1 in
             sed -i.bak.for.sed.inplace.edit "s/MY_SUB_PROJECT_NAME/$2/g" ${FILE_TO_SED}
             rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
         done
-        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ]; then
+        for FILE_TO_SED in $(grep -R MY_LOCATION_NAME ./DevOps/*|awk -F":" '{print $1}'|sort|uniq)
+        do
+            sed -i.bak.for.sed.inplace.edit "s/MY_LOCATION_NAME/$3/g" ${FILE_TO_SED}
+            rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
+        done
+        for FILE_TO_SED in $(grep -R MY_PHASE_NAME ./DevOps/*|awk -F":" '{print $1}'|sort|uniq)
+        do
+            sed -i.bak.for.sed.inplace.edit "s/MY_PHASE_NAME/$4/g" ${FILE_TO_SED}
+            rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
+        done
+        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ] && [ -e ./"$2".cabal ]; then
             sed -i.bak.for.sed.inplace.edit "/nix-build/d" ./DevOps/"$3"/"$4"/build/build.sh
             rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
         else

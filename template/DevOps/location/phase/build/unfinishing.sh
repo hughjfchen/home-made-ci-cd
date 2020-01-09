@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to do for unfinishing. Done"
+begin_banner "Top level" "build unfinishing"
+
+done_banner "Top level" "build unfinishing"

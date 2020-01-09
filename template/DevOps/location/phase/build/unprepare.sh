@@ -9,12 +9,14 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "Top level" "build unprepare"
+
 set +u
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
 if type nix-build >/dev/null 2>&1; then
-    echo "nix-build found, trying to uninstall it"
+    info "nix-build found, trying to uninstall it"
     if [ "${THE_DISTRIBUTION_ID}" == "debian" ]; then
         sudo sysctl kernel.unprivileged_userns_clone=1
     fi
@@ -30,7 +32,7 @@ if type nix-build >/dev/null 2>&1; then
 fi
 
 if type nodejs >/dev/null 2>&1 || type node >/dev/null 2>&1; then
-    echo "nodejs found, trying to uninstall it"
+    info "nodejs found, trying to uninstall it"
     case ${THE_DISTRIBUTION_ID} in
         debian)
             sudo apt-get purge -y nodejs
@@ -40,7 +42,7 @@ if type nodejs >/dev/null 2>&1 || type node >/dev/null 2>&1; then
                 brew uninstall node@10
                 brew unlink node@10
             else
-                echo "Use your macOS finder to uninstall the nodejs package."
+                info "Use your macOS finder to uninstall the nodejs package."
             fi
             ;;
         rhel|centos)
@@ -49,3 +51,5 @@ if type nodejs >/dev/null 2>&1 || type node >/dev/null 2>&1; then
         *) ;;
     esac
 fi
+
+done_banner "Top level" "build unprepare"

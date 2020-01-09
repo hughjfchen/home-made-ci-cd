@@ -9,10 +9,14 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "Top level" "build prepare"
+
+set +u
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh
+set -u
 
 if ! type nix-build >/dev/null 2>&1; then
-    echo "no nix-build found, trying to install it"
+    info "no nix-build found, trying to install it"
     case ${THE_DISTRIBUTION_ID} in
       debian)
         sudo sysctl kernel.unprivileged_userns_clone=1
@@ -32,28 +36,28 @@ if ! type nix-build >/dev/null 2>&1; then
 fi
 
 if ! type patchelf >/dev/null 2>&1; then
-    echo "no patchelf found, trying to install it"
+    info "no patchelf found, trying to install it"
     nix-env --install patchelf
 fi
 
 if ! type cabal2nix >/dev/null 2>&1; then
-    echo "no cabal2nix found, trying to install it"
+    info "no cabal2nix found, trying to install it"
 
     nix-env --install cabal2nix
 fi
 
 if ! type nix-prefetch-git >/dev/null 2>&1; then
-    echo "no nix-prefetch-git found, trying to install it"
+    info "no nix-prefetch-git found, trying to install it"
     nix-env --install nix-prefetch-git
 fi
 
 if ! type cabal >/dev/null 2>&1; then
-    echo "no cabal-install found, trying to install it"
+    info "no cabal-install found, trying to install it"
     nix-env --install cabal-install
 fi
 
 if ! type nodejs >/dev/null 2>&1 && ! type node >/dev/null 2>&1; then
-    echo "no nodejs found, trying to install it"
+    info "no nodejs found, trying to install it"
     case ${THE_DISTRIBUTION_ID} in
       debian)
           curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
@@ -74,3 +78,5 @@ if ! type nodejs >/dev/null 2>&1 && ! type node >/dev/null 2>&1; then
       *) ;;
     esac
 fi
+
+done_banner "Top level" "build prepare"

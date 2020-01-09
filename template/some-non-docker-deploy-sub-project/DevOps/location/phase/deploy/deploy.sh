@@ -8,4 +8,8 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "MY_SUB_PROJECT_NAME" "deploy deploy"
+
 sudo tar zPxf ./MY_SUB_PROJECT_NAME.tar.gz
+
+done_banner "MY_SUB_PROJECT_NAME" "deploy deploy"

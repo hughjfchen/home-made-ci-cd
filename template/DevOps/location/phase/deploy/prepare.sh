@@ -8,11 +8,12 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "Top level" "deploy prepare"
+
 if ! type docker >/dev/null 2>&1; then
-    echo "no docker found, trying to install it"
+    info "no docker found, trying to install it"
     case ${THE_DISTRIBUTION_ID} in
-        rhel) echo "Don't know how to install docker-ce on RHEL, will abort."
-              exit 1
+        rhel) my_exit "Don't know how to install docker-ce on RHEL, will abort." 1
               ;;
         debian) THE_DISTRIBUTION_VERSION_CODENAME=$(grep -w "VERSION_CODENAME" /etc/os-release |awk -F"=" '{print $NF}'|sed 's/"//g')
                 my_arch=$(uname -m)
@@ -41,21 +42,20 @@ if ! type docker >/dev/null 2>&1; then
                     brew cask install docker
                 else
                     #wget -c https://download.docker.com/mac/stable/Docker.dmg
-                    echo "Cannot install docker desktop for MacOS automatically without homebrew,"
-                    echo "please go to following web page to download and isntall the package."
-                    echo "https://hub.docker.com/?overlay=onboarding"
+                    warn "Cannot install docker desktop for MacOS automatically without homebrew,"
+                    warn "please go to following web page to download and isntall the package."
+                    warn "https://hub.docker.com/?overlay=onboarding"
                 fi
                 ;;
-        *) echo "Not supported distribution OS"
+        *) my_exit "Not supported distribution OS" 1
            ;;
     esac
 fi
 
 if ! type docker-compose >/dev/null 2>&1; then
-    echo "no docker-compose found, trying to install it"
+    info "no docker-compose found, trying to install it"
     case ${THE_DISTRIBUTION_ID} in
-        rhel) echo "docker-compose depends on docker, yet don't know how to install docker-ce on RHEL, so abord."
-              exit 1
+        rhel) my_exit "docker-compose depends on docker, yet don't know how to install docker-ce on RHEL, so abord." 1
               ;;
         debian) sudo apt-get update
                 sudo apt-get install -y docker-compose
@@ -64,9 +64,11 @@ if ! type docker-compose >/dev/null 2>&1; then
                 sudo chmod +x /usr/local/bin/docker-compose
                 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
                 ;;
-        Darwin) echo "docker-compose will installed with docker desktop for macos. skip."
+        Darwin) info "docker-compose will installed with docker desktop for macos. skip."
                 ;;
-        *) echo "Not supported distribution OS"
+        *) my_exit "Not supported distribution OS" 1
            ;;
     esac
 fi
+
+done_banner "Top level" "deploy prepare"

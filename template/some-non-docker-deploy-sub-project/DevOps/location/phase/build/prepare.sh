@@ -8,6 +8,14 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to do for MY_SUB_PROJECT_NAME preparation in build phase. Done"
+begin_banner "MY_SUB_PROJECT_NAME" "build prepare"
 
+#set +u to workaround the nix script temperlately.
+set +u
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+set -u
 
+# generate nix file for the project
+[[ -e ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.cabal ]] && cabal2nix . > ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix
+
+done_banner "MY_SUB_PROJECT_NAME" "build prepare"

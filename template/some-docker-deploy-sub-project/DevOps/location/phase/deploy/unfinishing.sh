@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing for MY_SUB_PROJECT_NAME unfinishing. Done."
+begin_banner "MY_SUB_PROJECT_NAME" "deploy unfinishing"
+
+done_banner "MY_SUB_PROJECT_NAME" "deploy unfinishing"

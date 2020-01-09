@@ -8,9 +8,11 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "Top level" "build build"
+
 #set +u to temp work around the nix script
 set +u
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-echo "The top level folder is only a container for other sub projects. Nothing to build. Done."
+done_banner "Top level" "build build"

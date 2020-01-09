@@ -8,4 +8,8 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Currently, nothing to do. In the future, maybe need to remove some start/stop scripts created during installation"
+begin_banner "MY_SUB_PROJECT_NAME" "deploy unfinishing"
+
+info "Currently, nothing to do for MY_SUB_PROJECT_NAME deploy unfinishing. In the future, maybe need to remove some start/stop scripts created during installation"
+
+done_banner "MY_SUB_PROJECT_NAME" "deploy unfinishing"

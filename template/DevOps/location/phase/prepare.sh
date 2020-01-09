@@ -9,27 +9,27 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "Top level" "prepare"
+
 case ${THE_DISTRIBUTION_ID} in
     rhel) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ]; then
-	            echo "This CI/CD script only supports RHEL 7.x, will abort."
-              exit 1
+	            my_exit "This CI/CD script only supports RHEL 7.x, will abort." 1
           fi
           ;;
     debian) if [ "${THE_DISTRIBUTION_VERSION}" != "9" ]; then
-                echo "This CI/CD script only supports debian 9.x, will abort"
-                exit 1
+                my_exit "This CI/CD script only supports debian 9.x, will abort" 1
             fi
             ;;
     centos) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ]; then
-                echoc "This CI/CD script only support Centos 7.x, will abort"
-                exit 1
+                my_exit "This CI/CD script only support Centos 7.x, will abort" 1
             fi
             ;;
-    Darwin) echo "Please note that MacOS only use as a development environment."
+    Darwin) warn "Please note that MacOS only use as a development environment."
             ;;
-    *) echo "Unsupported linux distribution, will abort"
-       exit 1
+    *) my_exit "Unsupported linux distribution, will abort" 1
        ;;
 esac
+
+done_banner "Top level" "prepare"
 
 # for development env, git should had already be installed.

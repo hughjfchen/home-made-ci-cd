@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "The top level folder is only a container for other sub projects. Nothing to undeploy for itself. Done."
+begin_banner "Top level" "deploy undeploy"
+
+done_banner "Top level" "deploy undeploy"

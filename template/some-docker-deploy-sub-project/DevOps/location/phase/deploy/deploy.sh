@@ -8,6 +8,8 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "MY_SUB_PROJECT_NAME" "deploy deploy"
+
 sg docker -c "docker-compose -f /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml up -d"
 
-
+done_banner "MY_SUB_PROJECT_NAME" "deploy deploy"

@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to do for MY_SUB_PROJECT_NAME unpreparation in build phase. Done"
+begin_banner "MY_SUB_PROJECT_NAME" "build unprepare"
+
+done_banner "MY_SUB_PROJECT_NAME" "build unprepare"

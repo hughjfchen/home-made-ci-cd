@@ -8,9 +8,11 @@ fi
 
 init_with_root_or_sudo "$0"
 
+begin_banner "MY_SUB_PROJECT_NAME" "build unbuild"
+
 #set +u to workaround the nix script temperlately.
 set +u
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-echo "Nothing to do for MY_SUB_PROJECT_NAME unbuild phase. Done"
+done_banner "MY_SUB_PROJECT_NAME" "build unbuild"

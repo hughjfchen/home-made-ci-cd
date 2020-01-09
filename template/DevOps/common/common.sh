@@ -5,6 +5,53 @@ guard_bash_error () {
     set -Eeuo pipefail
 }
 
+# Log levels
+INFO=0
+WARN=1
+ERROR=2
+FATAL=3
+DEBUG=4
+DEFAULT_LOG_LEVEL=${ERROR}
+
+my_exit () {
+    echo "EXIT: - [HOST:$(hostname)]: - $(date +"%Y-%m-%d %H:%M:%S") - $1"
+    exit "$2"
+}
+
+msg () {
+    if [ $1 -le ${DEFAULT_LOG_LEVEL} ]; then
+        echo "[HOST:$(hostname)]: - $(date +"%Y-%m-%d %H:%M:%S") - $2"
+    fi
+}
+
+info () {
+    msg ${INFO} "INFO: - $1"
+}
+
+warn () {
+    msg ${WARN} "WARNING: - $1"
+}
+
+error () {
+    msg ${ERROR} "ERROR: - $1"
+}
+
+fatal () {
+    msg ${FATAL} "FATAL: - $1"
+}
+
+debug () {
+    msg ${DEBUG} "DEBUG: - $1"
+}
+
+begin_banner () {
+    info "$1 - $2 phase - begin"
+}
+
+done_banner () {
+    info "$1 - $2 phase - done"
+}
+
 ### turn path within script into absolute path
 ### must pass the calling string of the script as the first parameter
 ### e.g., ./path_to_script/script.sh
@@ -33,8 +80,7 @@ change_CD_to_project_root () {
         my_loop=$(expr ${my_loop} - 1)
     done
     if [ ${my_loop} -eq 0 ]; then
-        echo "Too many level up within the searching for DevOps directory,abort."
-        exit 1
+        my_exit "Too many level up within the searching for DevOps directory,abort." 1
     fi
     cd "$1/${up_level}"
 }
@@ -72,8 +118,7 @@ init_with_root_or_sudo () {
     guard_bash_error
 
     if ! guard_root_or_sudo; then
-        echo "You must be root or you must be sudoer to prepare the env for CI/CD."
-        exit 1
+        my_exit "You must be root or you must be sudoer to prepare the env for CI/CD." 1
     fi
 
     SCRIPT_ABS_PATH=$(turn_to_absolute_path $0)

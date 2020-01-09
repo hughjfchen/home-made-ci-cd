@@ -1,94 +1,49 @@
 #!/usr/bin/env bash
-### set this flag to make sure exit code correct
-set -Eeuo pipefail
+if ! type dirname > /dev/null 2>&1; then
+    echo "Not even a linux or macOS, Windoze? We don't support it. Abort."
+    exit 1
+fi
 
-### turn path within script into absolute path
-SCRIPT_ABS_PATH_RAW=$(dirname $0)
-# turn SCRIPT_ABS_PATH into absolute path
-case ${SCRIPT_ABS_PATH_RAW} in
-    /*) SCRIPT_ABS_PATH=${SCRIPT_ABS_PATH_RAW} ;;
-    *) SCRIPT_ABS_PATH=$PWD/${SCRIPT_ABS_PATH_RAW} ;;
-esac
+. "$(dirname "$0")"/../../common/common.sh
 
-### change working path to the project home path
-cd ${SCRIPT_ABS_PATH}/../../..
+init_with_root_or_sudo "$0"
 
-${SCRIPT_ABS_PATH}/prepare.sh
-${SCRIPT_ABS_PATH}/deployment/prepare.sh
+begin_banner "Top level" "Cont. Deploy and Test"
 
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/deployment/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/deployment/undeploy.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/deployment/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/deployment/prepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/deployment/deploy.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/deployment/finishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/finishing.sh
+warn "Nothing can be filled by default, you must build the top level CD-CT pipeline yourself."
+warn "Refer to the cd-ct.sh for some example"
 
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/deployment/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/deployment/undeploy.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/deployment/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/deployment/prepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/deployment/deploy.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/deployment/finishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/finishing.sh
+#${SCRIPT_ABS_PATH}/prepare.sh
+#${SCRIPT_ABS_PATH}/deploy/prepare.sh
 
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/deployment/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/deployment/undeploy.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/deployment/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/deployment/prepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/deployment/deploy.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/deployment/finishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/finishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/deploy/unfinishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/deploy/undeploy.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/deploy/unprepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/unfinishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/unprepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/deploy/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/deploy/deploy.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/deploy/finishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/finishing.sh
 
-${SCRIPT_ABS_PATH}/deployment/deploy.sh
-${SCRIPT_ABS_PATH}/deployment/finishing.sh
-${SCRIPT_ABS_PATH}/finishing.sh
+#${SCRIPT_ABS_PATH}/deploy/deploy.sh
+#${SCRIPT_ABS_PATH}/deploy/finishing.sh
 
-${SCRIPT_ABS_PATH}/prepare.sh
-${SCRIPT_ABS_PATH}/test/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/test/unfinishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/test/untest.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/test/unprepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/unfinishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/unprepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/test/prepare.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/test/test.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/test/finishing.sh
+#${SCRIPT_ABS_PATH}/../../../MY_SUB_PROJECT_NAME/DevOps/MY_LOCATION_NAME/MY_PHASE_NAME/finishing.sh
 
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/test/untest.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/test/test.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/test/finishing.sh
-${SCRIPT_ABS_PATH}/../../../persist/postgresql/DevOps/gcp/test/finishing.sh
+#${SCRIPT_ABS_PATH}/test/test.sh
+#${SCRIPT_ABS_PATH}/test/finishing.sh
 
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/test/untest.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/test/test.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/test/finishing.sh
-${SCRIPT_ABS_PATH}/../../../broker/mosquitto/DevOps/gcp/test/finishing.sh
+#${SCRIPT_ABS_PATH}/finishing.sh
 
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/test/untest.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/unfinishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/unprepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/test/prepare.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/test/test.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/test/finishing.sh
-${SCRIPT_ABS_PATH}/../../../core-and-api/DevOps/gcp/test/finishing.sh
-
-${SCRIPT_ABS_PATH}/test/test.sh
-${SCRIPT_ABS_PATH}/test/finishing.sh
-${SCRIPT_ABS_PATH}/finishing.sh
+done_banner "Top level" "Cont. Deploy and Test"

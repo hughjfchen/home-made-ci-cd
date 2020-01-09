@@ -8,4 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-echo "Nothing to do for finishing. Done."
+begin_banner "MY_SUB_PROJECT_NAME" "finishing"
+
+done_banner "MY_SUB_PROJECT_NAME" "finishing"
