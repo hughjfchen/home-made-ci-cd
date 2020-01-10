@@ -42,7 +42,10 @@ if [ ! -d /var/MY_SUB_PROJECT_NAME ]; then
     sudo chown -R MY_SUB_PROJECT_NAME:MY_SUB_PROJECT_NAME /var/MY_SUB_PROJECT_NAME
 fi
 
-sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_config_path:${MY_SUB_PROJECT_NAME_config_path}:g\" < ${SCRIPT_ABS_PATH}/docker-compose.yml > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME 
+sudo cp ${SCRIPT_ABS_PATH}/docker-compose.yml /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig
+sudo chown MY_SUB_PROJECT_NAME:MY_SUB_PROJECT_NAME /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig
+
+sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_config_path:${MY_SUB_PROJECT_NAME_config_path}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME 
 sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_data_path:${MY_SUB_PROJECT_NAME_data_path}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
 
 if [ -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
