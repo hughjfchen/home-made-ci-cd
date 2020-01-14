@@ -10,7 +10,7 @@ init_with_root_or_sudo "$0"
 
 begin_banner "MY_SUB_PROJECT_NAME" "deploy unprepare"
 
-if [ -d /var/MY_SUB_PROJECT_NAME]; then
+if [ -d /var/MY_SUB_PROJECT_NAME ]; then
     info "/var/MY_SUB_PROJECT_NAME directory found, delete it..."
     sudo rm -fr /var/MY_SUB_PROJECT_NAME
 fi
