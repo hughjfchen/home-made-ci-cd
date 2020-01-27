@@ -60,7 +60,7 @@ let
 
   MY_SUB_PROJECT_NAME-docker =  pkgs.dockerTools.buildImage {
   name = "MY_SUB_PROJECT_NAME";
-  tag = "5.2.0";
+  tag = MY_SUB_PROJECT_NAME.version;
   
   contents = [ static-MY_SUB_PROJECT_NAME
                MY_SUB_PROJECT_NAME-env ];
