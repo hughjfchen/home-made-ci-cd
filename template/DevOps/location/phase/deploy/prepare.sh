@@ -22,7 +22,18 @@ if ! type docker >/dev/null 2>&1; then
                 else
                     docker_arm="amd64"
                 fi
-                sudo apt-get purge -y docker docker-engine docker.io runc
+                if dpkg-query -l | grep docker.io ; then
+                    sudo apt-get purge -y docker.io 
+                fi
+                if dpkg-query -l | grep docker-engine ; then
+                    sudo apt-get purge -y docker-engine 
+                fi
+                if dpkg-query -l | grep docker ; then
+                    sudo apt-get purge -y docker
+                fi
+                if dpkg-query -l | grep runc ; then
+                    sudo apt-get purge -y runc
+                fi
                 sudo apt-get update
                 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
                 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
