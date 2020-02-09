@@ -8,6 +8,6 @@ fi
 
 init_with_root_or_sudo "$0"
 
-begin_bnner "MY_SUB_PROJECT_NAME" "unprepare"
+begin_banner "MY_SUB_PROJECT_NAME" "unprepare"
 
 done_banner "MY_SUB_PROJECT_NAME" "unprepare"

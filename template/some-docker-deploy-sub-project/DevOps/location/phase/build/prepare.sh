@@ -16,6 +16,7 @@ set +u
 set -u
 
 # generate nix file for the project
-[[ -e ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.cabal ]] && cabal2nix . > ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix
+#[[ -e ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.cabal ]] && cabal2nix . > ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix
+cabal2nix ${SCRIPT_ABS_PATH}/../../../.. > ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix
 
 done_banner "MY_SUB_PROJECT_NAME" "build prepare"

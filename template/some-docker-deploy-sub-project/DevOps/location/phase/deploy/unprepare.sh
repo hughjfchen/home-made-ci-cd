@@ -29,10 +29,10 @@ if [ "X${myGroup2}" != "X" ]; then
 fi
 set -e
 
-MY_TO_REMOVE_IMAGES=$(sg docker -c "docker images"|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')
+MY_TO_REMOVE_IMAGES=$(sudo sg docker -c "docker images"|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')
 for MY_TO_REMOVE_IMAGE in ${MY_TO_REMOVE_IMAGES}
 do
-    sg docker -c "docker image rm -f ${MY_TO_REMOVE_IMAGE}"
+    sudo sg docker -c "docker image rm -f ${MY_TO_REMOVE_IMAGE}"
 done
 
 done_banner "MY_SUB_PROJECT_NAME" "deploy unprepare"

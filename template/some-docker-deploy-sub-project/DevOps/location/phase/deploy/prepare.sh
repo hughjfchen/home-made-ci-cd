@@ -13,7 +13,7 @@ begin_banner "MY_SUB_PROJECT_NAME" "deploy prepare"
 if [ ! -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
     warn "no MY_SUB_PROJECT_NAME build result found, suppose that the image would be pull from registry"
 else
-    sg docker -c "docker load -i ${SCRIPT_ABS_PATH}/../../../../result"
+    sudo sg docker -c "docker load -i ${SCRIPT_ABS_PATH}/../../../../result"
 fi
 
 MY_SUB_PROJECT_NAME_config_path="/var/MY_SUB_PROJECT_NAME/config"
@@ -49,8 +49,8 @@ sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_config_path:${MY_SUB_PROJECT_NAME_con
 sudo su -p -c "sed \"s:MY_SUB_PROJECT_NAME_data_path:${MY_SUB_PROJECT_NAME_data_path}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
 
 if [ -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
-    MY_SUB_PROJECT_NAME_IMAGE_ID=$(sg docker -c "docker images"|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')
-    cmdPath=$(sg docker -c "docker image inspect ${MY_SUB_PROJECT_NAME_IMAGE_ID}" | grep "/nix/store/" | awk -F"/" '{print "/nix/store/"$4}')
+    MY_SUB_PROJECT_NAME_IMAGE_ID=$(sudo sg docker -c "docker images"|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')
+    cmdPath=$(sudo sg docker -c "docker image inspect ${MY_SUB_PROJECT_NAME_IMAGE_ID}" | grep "/nix/store/" | awk -F"/" '{print "/nix/store/"$4}')
     sudo su -p -c "sed \"s:static_MY_SUB_PROJECT_NAME_nix_store_path:${cmdPath}:g\" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml > /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02" MY_SUB_PROJECT_NAME
     cp /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02 /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml
 fi

@@ -134,7 +134,7 @@ case $1 in
             sed -i.bak.for.sed.inplace.edit "s/MY_PHASE_NAME/$4/g" ${FILE_TO_SED}
             rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
         done
-        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ] && [ -e ./"$2".cabal ]; then
+        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ] ; then
             sed -i.bak.for.sed.inplace.edit "/nix-build/d" ./DevOps/"$3"/"$4"/build/build.sh
             rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
         else
@@ -164,7 +164,7 @@ case $1 in
             sed -i.bak.for.sed.inplace.edit "s/MY_PHASE_NAME/$4/g" ${FILE_TO_SED}
             rm -fr ${FILE_TO_SED}.bak.for.sed.inplace.edit
         done
-        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ] && [ -e ./"$2".cabal ]; then
+        if [ "X$3" = "Xlocal" ] && [ "X$4" = "Xdev" ] ; then
             sed -i.bak.for.sed.inplace.edit "/nix-build/d" ./DevOps/"$3"/"$4"/build/build.sh
             rm -fr ./DevOps/"$3"/"$4"/build/build.sh.bak.for.sed.inplace.edit
         else
