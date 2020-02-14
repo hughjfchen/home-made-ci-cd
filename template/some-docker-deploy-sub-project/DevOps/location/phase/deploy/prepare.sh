@@ -16,9 +16,6 @@ else
     sudo sg docker -c "docker load -i ${SCRIPT_ABS_PATH}/../../../../result"
 fi
 
-MY_SUB_PROJECT_NAME_config_path="/var/MY_SUB_PROJECT_NAME/config"
-MY_SUB_PROJECT_NAME_data_path="/var/MY_SUB_PROJECT_NAME/data"
-
 set +e
 myGroup2=$(awk -F":" '{print $1}' /etc/group | grep -w MY_SUB_PROJECT_NAME)
 set -e
@@ -45,8 +42,8 @@ fi
 sudo cp ${SCRIPT_ABS_PATH}/docker-compose.yml /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig
 sudo chown MY_SUB_PROJECT_NAME:MY_SUB_PROJECT_NAME /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig
 
-sudo sed "s:MY_SUB_PROJECT_NAME_config_path:${MY_SUB_PROJECT_NAME_config_path}:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME 
-sudo sed "s:MY_SUB_PROJECT_NAME_data_path:${MY_SUB_PROJECT_NAME_data_path}:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
+sudo sed "s:MY_SUB_PROJECT_NAME_config_path:/var/MY_SUB_PROJECT_NAME/config:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME 
+sudo sed "s:MY_SUB_PROJECT_NAME_data_path:/var/MY_SUB_PROJECT_NAME/data:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
 
 if [ -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
     MY_SUB_PROJECT_NAME_IMAGE_ID=$(sudo sg docker -c "docker images"|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')

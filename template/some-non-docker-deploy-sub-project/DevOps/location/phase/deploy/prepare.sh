@@ -36,9 +36,6 @@ case ${THE_DISTRIBUTION_ID} in
        ;;
 esac
 
-MY_SUB_PROJECT_NAME_data_path="/var/MY_SUB_PROJECT_NAME/data"
-MY_SUB_PROJECT_NAME_config_path="/var/MY_SUB_PROJECT_NAME/config"
-
 set +e
 myGroup2=$(awk -F":" '{print $1}' /etc/group | grep -w MY_SUB_PROJECT_NAME)
 set -e
