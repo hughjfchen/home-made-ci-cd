@@ -13,12 +13,18 @@ begin_banner "Top level" "build prepare"
 
 get_last_stable_nix_channel () {
     local MY_CHANNEL_NAME_REGEX=""
+    local MY_LAST_NIX_STABLE_CHANNEL=""
     case ${THE_DISTRIBUTION_ID} in
-      debian|rhel|centos) MY_CHANNEL_NAME_REGEX='s/.*\(nixos-[0-9][0-9].[0-9][0-9]\).*/\1/p' ;;
-      Darwin) MY_CHANNEL_NAME_REGEX='s/.*\(nixpkgs-[0-9][0-9].[0-9][0-9]-darwin\).*/\1/p' ;;
+      debian|rhel|centos) 
+          MY_CHANNEL_NAME_REGEX='s/.*\(nixos-[0-9][0-9].[0-9][0-9]\).*/\1/p'
+          MY_LAST_NIX_STABLE_CHANNEL=$(curl https://nixos.org/channels/ 2>/dev/null | sed -n ${MY_CHANNEL_NAME_REGEX} | sort | tail -2 | head -1)
+          ;;
+      Darwin)
+          MY_CHANNEL_NAME_REGEX='s/.*\(nixpkgs-[0-9][0-9].[0-9][0-9]-darwin\).*/\1/p'
+          MY_LAST_NIX_STABLE_CHANNEL=$(curl https://nixos.org/channels/ 2>/dev/null | sed -n ${MY_CHANNEL_NAME_REGEX} | sort | tail -1)
+          ;;
       *) ;;
     esac
-    local MY_LAST_NIX_STABLE_CHANNEL=$(curl https://nixos.org/channels/ 2>/dev/null | sed -n ${MY_CHANNEL_NAME_REGEX} | sort | tail -1)
     echo ${MY_LAST_NIX_STABLE_CHANNEL}
 }
 
