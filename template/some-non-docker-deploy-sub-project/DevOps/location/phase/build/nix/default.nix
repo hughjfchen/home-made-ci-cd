@@ -17,7 +17,10 @@ let
     };
   };
 
-  pkgs = import <nixpkgs> { inherit config; };
+  pkgs = if builtins.pathExists ./nixpkgs then
+           import (builtins.fetchGit (import ./nixpkgs)) { inherit config; }
+         else
+           import <nixpkgs> { inherit config; };
 
   inherit (pkgs) dockerTools stdenv buildEnv writeText;
 

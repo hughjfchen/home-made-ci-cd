@@ -1,0 +1,15 @@
+# If your want to pin the nixpkgs, change the data accordingly in this file
+# and rename the file to nixpkgs and it will be picked up by the build CI.
+# nixpkgs-19.09 at 2020-04-05T15:13:59Z
+{
+  # Descriptive name to make the store path easier to identify
+  name = "nixos-19.09-2020-04-05";
+  url = "https://github.com/nixos/nixpkgs-channels/";
+  # Commit hash for nixos-19.09 as of 2020-04-05
+  # `git ls-remote https://github.com/nixos/nixpkgs-channels nixos-19.09`
+  # use the following command to check the rev value:
+  # curl https://api.github.com/repos/NixOS/nixpkgs-channels/branches/nixos-19.09
+  # and check the commit -> sha feild of the return JSON
+  ref = "refs/heads/nixos-19.09";
+  rev = "f6c1d3b113ce9e7c908991df2e8eed02f03df1bc";
+}
