@@ -19,6 +19,7 @@ if [ -f ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix ]; then
     if [ -e ${SCRIPT_ABS_PATH}/../../dev ] && [ -e ${SCRIPT_ABS_PATH}/../../../local ]; then
         # for doom-emacs
         [ -x ~/.emacs.d/bin/doom ] && echo "((nil . ((dante-target . \"MY_SUB_PROJECT_NAME\"))))" > ${SCRIPT_ABS_PATH}/../../../../.dir-locals.el && nix-shell --run "~/.emacs.d/bin/doom env > /dev/null 2>&1" ${SCRIPT_ABS_PATH}/nix/shell.nix
+        [ type -p cabal ] && cabal new-update
         nix-shell ${SCRIPT_ABS_PATH}/nix/shell.nix
     else
         nix-build -A MY_SUB_PROJECT_NAME-docker ${SCRIPT_ABS_PATH}/nix/default.nix
