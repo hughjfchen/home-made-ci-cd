@@ -108,7 +108,7 @@ SCRIPT_ABS_PATH=$(turn_to_absolute_path $0)
 case $1 in
     top) [[ "X$2" = "X" ]] && usage_and_exit
          [[ "X$3" = "X" ]] && usage_and_exit
-         [[ ! -d ./DevOps/common ]] && (mkdir -p ./DevOps/common ; cp -R ${SCRIPT_ABS_PATH}/template/DevOps/common/* ./DevOps/common/)
+         (mkdir -p ./DevOps/common ; cp -R ${SCRIPT_ABS_PATH}/template/DevOps/common/* ./DevOps/common/)
          mkdir -p ./DevOps/"$2"/"$3"
          cp -R ${SCRIPT_ABS_PATH}/template/DevOps/location/phase/* ./DevOps/"$2"/"$3"/
          ;;
