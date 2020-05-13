@@ -3,7 +3,7 @@
 version: '2'
 services:
   MY_SUB_PROJECT_NAME:
-    image: MY_SUB_PROJECT_NAME:0.1.0.0
+    image: DOCKER_HUB_IMAGE_TAG
     ports:
       - "3000:3000"
     links:
@@ -12,7 +12,7 @@ services:
     environment:
       PARA1: XXXXX
       PARA2: YYYYY
-    command: static_MY_SUB_PROJECT_NAME_nix_store_path/bin/MY_SUB_PROJECT_NAME
+    command: MY_SUB_PROJECT_NAME
     volumes:
       - "MY_SUB_PROJECT_NAME_config_path:/var/MY_SUB_PROJECT_NAME/config"
       - "MY_SUB_PROJECT_NAME_data_path:/var/MY_SUB_PROJECT_NAME/data"

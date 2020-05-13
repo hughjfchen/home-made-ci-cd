@@ -13,7 +13,14 @@ begin_banner "MY_SUB_PROJECT_NAME" "deploy prepare"
 if [ ! -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
     warn "no MY_SUB_PROJECT_NAME build result found, suppose that the image would be pull from registry"
 else
-    sudo sg docker -c "docker load -i ${SCRIPT_ABS_PATH}/../../../../result"
+    LOCAL_IMAGE_LOAD_RESULT=$(sudo sg docker -c "docker load -i ${SCRIPT_ABS_PATH}/../../../../result")
+    LOCAL_IMAGE_TAG=$(echo ${LOCAL_IMAGE_LOAD_RESULT} | awk -F"image: " '{print $NF}')
+    info "local image tag: ${LOCAL_IMAGE_TAG}"
+    info "tagging the image as MY_SUB_PROJECT_NAME/${LOCAL_IMAGE_TAG}"
+    sudo sg docker -c "docker tag ${LOCAL_IMAGE_TAG} MY_SUB_PROJECT_NAME/${LOCAL_IMAGE_TAG}"
+    info "pushing the tag MY_SUB_PROJECT_NAME/${LOCAL_IMAGE_TAG} to docker.io hub"
+    sudo sg docker -c "docker login -u \"${MY_SUB_PROJECT_NAME_DOCKER_HUB_USERNAME}\" -p \"${MY_SUB_PROJECT_NAME_DOCKER_HUB_PASSWORD}\""
+    sudo sg docker -c "docker push MY_SUB_PROJECT_NAME/${LOCAL_IMAGE_TAG}"
 fi
 
 set +e
@@ -43,13 +50,7 @@ sudo cp ${SCRIPT_ABS_PATH}/docker-compose.yml /var/MY_SUB_PROJECT_NAME/docker-co
 sudo chown MY_SUB_PROJECT_NAME:MY_SUB_PROJECT_NAME /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig
 
 sudo sed "s:MY_SUB_PROJECT_NAME_config_path:/var/MY_SUB_PROJECT_NAME/config:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.orig | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01" MY_SUB_PROJECT_NAME 
-sudo sed "s:MY_SUB_PROJECT_NAME_data_path:/var/MY_SUB_PROJECT_NAME/data:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
-
-if [ -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
-    MY_SUB_PROJECT_NAME_IMAGE_ID=$(sudo sg docker -c "docker images"|grep -w MY_SUB_PROJECT_NAME|awk '{print $3}')
-    cmdPath=$(sudo sg docker -c "docker image inspect ${MY_SUB_PROJECT_NAME_IMAGE_ID}" | grep "/nix/store/" | awk -F"/" '{print "/nix/store/"$4}')
-    sudo sed "s:static_MY_SUB_PROJECT_NAME_nix_store_path:${cmdPath}:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02" MY_SUB_PROJECT_NAME
-    sudo cat /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02 | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
-fi
+sudo sed "s:MY_SUB_PROJECT_NAME_data_path:/var/MY_SUB_PROJECT_NAME/data:g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.01 | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02" MY_SUB_PROJECT_NAME
+sudo sed "s/DOCKER_HUB_IMAGE_TAG/MY_SUB_PROJECT_NAME\/${LOCAL_IMAGE_TAG}/g" < /var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml.02 | sudo su -p -c "dd of=/var/MY_SUB_PROJECT_NAME/docker-compose-MY_SUB_PROJECT_NAME.yml" MY_SUB_PROJECT_NAME
 
 done_banner "MY_SUB_PROJECT_NAME" "deploy prepare"

@@ -221,12 +221,13 @@ divert	258	DIVERT		# Divert pseudo-protocol
   contents = [ static-MY_SUB_PROJECT_NAME
                MY_SUB_PROJECT_NAME-env ];
   config = {
-    Env = [ 
-    "PARA1="
-    "PARA2="
+    Env = [
+      "PATH=${static-MY_SUB_PROJECT_NAME}/bin:$PATH"
+      "PARA1="
+      "PARA2="
     ];
     User = "MY_SUB_PROJECT_NAME";
-    Cmd = [ "${static-MY_SUB_PROJECT_NAME}/bin/MY_SUB_PROJECT_NAME" "/etc/MY_SUB_PROJECT_NAME/MY_SUB_PROJECT_NAME.conf" ];
+    Cmd = [ "MY_SUB_PROJECT_NAME" "/etc/MY_SUB_PROJECT_NAME/MY_SUB_PROJECT_NAME.conf" ];
     ExposedPorts = {
       "5432/tcp" = {};
     };

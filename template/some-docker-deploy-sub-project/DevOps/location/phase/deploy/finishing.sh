@@ -10,4 +10,7 @@ init_with_root_or_sudo "$0"
 
 begin_banner "MY_SUB_PROJECT_NAME" "deploy finishing"
 
+# clean up the docker login info
+[[ -d ~/.docker ]] && sudo rm -fr ~/.docker
+
 done_banner "MY_SUB_PROJECT_NAME" "deploy finishing"
