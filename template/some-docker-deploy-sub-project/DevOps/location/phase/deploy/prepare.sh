@@ -10,10 +10,15 @@ init_with_root_or_sudo "$0"
 
 begin_banner "MY_SUB_PROJECT_NAME" "deploy prepare"
 
-if [ ! -L ${SCRIPT_ABS_PATH}/../../../../result ]; then
+if [ -e ${SCRIPT_ABS_PATH}/../../../../../ci ]; then
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../../..
+else
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../..
+fi
+if [ ! -L ${SOURCE_ABS_PATH}/result ]; then
     warn "no MY_SUB_PROJECT_NAME build result found, suppose that the image would be pull from registry"
 else
-    LOCAL_IMAGE_LOAD_RESULT=$(sudo sg docker -c "docker load -i ${SCRIPT_ABS_PATH}/../../../../result")
+    LOCAL_IMAGE_LOAD_RESULT=$(sudo sg docker -c "docker load -i ${SOURCE_ABS_PATH}/result")
     LOCAL_IMAGE_TAG=$(echo ${LOCAL_IMAGE_LOAD_RESULT} | awk -F"image: " '{print $NF}')
     info "local image tag: ${LOCAL_IMAGE_TAG}"
     info "tagging the image as MY_SUB_PROJECT_NAME/${LOCAL_IMAGE_TAG}"

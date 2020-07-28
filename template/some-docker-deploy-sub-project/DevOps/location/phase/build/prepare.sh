@@ -16,6 +16,11 @@ set +u
 set -u
 
 # generate nix file for the project
-ls ${SCRIPT_ABS_PATH}/../../../../*.cabal > /dev/null 2>&1 || ls ${SCRIPT_ABS_PATH}/../../../../package.yaml > /dev/null 2>&1 && cabal2nix ${SCRIPT_ABS_PATH}/../../../.. > ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix
+if [ -e ${SCRIPT_ABS_PATH}/../../../../../ci ]; then
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../../..
+else
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../..
+fi
+ls ${SOURCE_ABS_PATH}/*.cabal > /dev/null 2>&1 || ls ${SOURCE_ABS_PATH}/package.yaml > /dev/null 2>&1 && cabal2nix ${SOURCE_ABS_PATH} > ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix
 
 done_banner "MY_SUB_PROJECT_NAME" "build prepare"

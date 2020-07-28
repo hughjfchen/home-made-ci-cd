@@ -10,7 +10,12 @@ init_with_root_or_sudo "$0"
 
 begin_banner "MY_SUB_PROJECT_NAME" "deploy prepare"
 
-if [ ! -e ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.tar.gz ]; then
+if [ -e ${SCRIPT_ABS_PATH}/../../../../../ci ]; then
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../../..
+else
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../..
+fi
+if [ ! -e ${SOURCE_ABS_PATH}/MY_SUB_PROJECT_NAME.tar.gz ]; then
     my_exit "no MY_SUB_PROJECT_NAME tarball found, make sure you build it and pack it as a tarball with its dependencies" 1
 fi
 

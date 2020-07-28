@@ -17,11 +17,16 @@ set +u
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 set -u
 
-if [ -e ${SCRIPT_ABS_PATH}/../../../../result ]; then
-  [[ -e ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.tar.gz ]] && rm -fr ./MY_SUB_PROJECT_NAME.tar.gz
-  tar zPcf ./MY_SUB_PROJECT_NAME.tar.gz $(nix-store --query --requisites ${SCRIPT_ABS_PATH}/../../../../result)
+if [ -e ${SCRIPT_ABS_PATH}/../../../../../ci ]; then
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../../..
 else
-  info "No ${SCRIPT_ABS_PATH}/../../../../result, can't pack tarball"
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../..
+fi
+if [ -e ${SOURCE_ABS_PATH}/result ]; then
+  [[ -e ${SOURCE_ABS_PATH}/MY_SUB_PROJECT_NAME.tar.gz ]] && rm -fr ${SOURCE_ABS_PATH}/MY_SUB_PROJECT_NAME.tar.gz
+  tar zPcf ${SOURCE_ABS_PATH}/MY_SUB_PROJECT_NAME.tar.gz $(nix-store --query --requisites ${SOURCE_ABS_PATH}/result)
+else
+  info "No ${SOURCE_ABS_PATH}/result, can't pack tarball"
 fi
 
 done_banner "MY_SUB_PROJECT_NAME" "build finishing"

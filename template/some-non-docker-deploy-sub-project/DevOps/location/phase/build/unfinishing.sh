@@ -12,6 +12,11 @@ begin_banner "MY_SUB_PROJECT_NAEM" "build unfinishing"
 
 info "Clean up the tarball"
 
-rm -fr ${SCRIPT_ABS_PATH}/../../../../MY_SUB_PROJECT_NAME.tar.gz
+if [ -e ${SCRIPT_ABS_PATH}/../../../../../ci ]; then
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../../..
+else
+  SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../..
+fi
+rm -fr ${SOURCE_ABS_PATH}/MY_SUB_PROJECT_NAME.tar.gz
 
 done_banner "MY_SUB_PROJECT_NAEM" "build unfinishing"

@@ -17,9 +17,20 @@ set -u
 
 if [ -f ${SCRIPT_ABS_PATH}/nix/MY_SUB_PROJECT_NAME.nix ]; then
     if [ -e ${SCRIPT_ABS_PATH}/../../dev ] && [ -e ${SCRIPT_ABS_PATH}/../../../local ]; then
+        # this is a dev env, set something up
+        if [ -e ${SCRIPT_ABS_PATH}/../../../../../ci ]; then
+          SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../../..
+        else
+          SOURCE_ABS_PATH=${SCRIPT_ABS_PATH}/../../../..
+        fi
+
         # for doom-emacs
-        [ -x ~/.emacs.d/bin/doom ] && echo "((nil . ((dante-target . \"MY_SUB_PROJECT_NAME\"))))" > ${SCRIPT_ABS_PATH}/../../../../.dir-locals.el && nix-shell --run "~/.emacs.d/bin/doom env > /dev/null 2>&1" ${SCRIPT_ABS_PATH}/nix/shell.nix
-        [ type -p cabal ] && cabal new-update
+        [ -x ~/.emacs.d/bin/doom ] && echo "((nil . ((dante-target . \"MY_SUB_PROJECT_NAME\"))))" > ${SOURCE_ABS_PATH}/.dir-locals.el && nix-shell --run "~/.emacs.d/bin/doom env > /dev/null 2>&1" ${SCRIPT_ABS_PATH}/nix/shell.nix
+        # always use cabal new-repl
+        [ -f ${SOURCE_ABS_PATH}/cabal.project.local ] || touch ${SOURCE_ABS_PATH}/cabal.project.local
+        # update cabal package database
+        type -p cabal > /dev/null && cabal new-update > /dev/null
+        # drop into a nix-shell
         nix-shell ${SCRIPT_ABS_PATH}/nix/shell.nix
     else
         nix-build -A MY_SUB_PROJECT_NAME-docker ${SCRIPT_ABS_PATH}/nix/default.nix
