@@ -12,7 +12,7 @@ init_with_root_or_sudo "$0"
 begin_banner "Top level" "prepare"
 
 case ${THE_DISTRIBUTION_ID} in
-    rhel) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ]; then
+    rhel) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ] && [ "${THE_DISTRIBUTION_VERSION}" != "8" ] ; then
 	            my_exit "This CI/CD script only supports RHEL 7.x, will abort." 1
           fi
           ;;
@@ -24,7 +24,7 @@ case ${THE_DISTRIBUTION_ID} in
                 my_exit "This CI/CD script only supports ubuntu 16.04 and 18.04, will abort" 1
             fi
             ;;
-    centos) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ]; then
+    centos) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ] && [ "${THE_DISTRIBUTION_VERSION}" != "8" ] ; then
                 my_exit "This CI/CD script only support Centos 7.x, will abort" 1
             fi
             ;;
