@@ -13,7 +13,24 @@ begin_banner "Top level" "deploy prepare"
 if ! type docker >/dev/null 2>&1; then
     info "no docker found, trying to install it"
     case ${THE_DISTRIBUTION_ID} in
-        rhel) my_exit "Don't know how to install docker-ce on RHEL, will abort." 1
+        rhel) sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+                sudo yum install -y yum-utils
+                sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+                # dirty hack to solve the '404 not found' problem when downloading packages because the $releasever
+                # is 7Server in RHEL, not 7 in Centos
+                sudo sed -i.bak "s/\$releasever/${THE_DISTRIBUTION_VERSION}/g" /etc/yum.repos.d/docker-ce.repo
+                sudo rm /etc/yum.repos.d/docker-ce.repo.bak
+                sudo yum install -y docker-ce docker-ce-cli containerd.io
+                sudo systemctl enable docker
+                sudo systemctl start docker
+                sudo /usr/sbin/usermod -a -G docker $(whoami)
               ;;
         debian) THE_DISTRIBUTION_VERSION_CODENAME=$(grep -w "VERSION_CODENAME" /etc/os-release |awk -F"=" '{print $NF}'|sed 's/"//g')
                 my_arch=$(uname -m)
@@ -93,14 +110,12 @@ fi
 if ! type docker-compose >/dev/null 2>&1; then
     info "no docker-compose found, trying to install it"
     case ${THE_DISTRIBUTION_ID} in
-        rhel) my_exit "docker-compose depends on docker, yet don't know how to install docker-ce on RHEL, so abord." 1
-              ;;
         debian|ubuntu) sudo apt-get update
                 sudo apt-get install -y docker-compose
                 # Following is for docker login
                 sudo apt-get install -y gnupg pass
                 ;;
-        centos) sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        centos|rhel) sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                 sudo chmod +x /usr/local/bin/docker-compose
                 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
                 # Following is for docker login
