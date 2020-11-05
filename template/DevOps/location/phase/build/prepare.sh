@@ -37,17 +37,17 @@ if ! type nix-build >/dev/null 2>&1; then
     case ${THE_DISTRIBUTION_ID} in
       debian)
         [[ -e /proc/sys/kernel/unprivileged_userns_clone ]] && sudo sysctl kernel.unprivileged_userns_clone=1
-        curl https://nixos.org/nix/install | sh
+        curl -L https://nixos.org/nix/install | sh
 	      ;;
       ubuntu)
         [[ -e /proc/sys/kernel/unprivileged_userns_clone ]] && sudo sysctl kernel.unprivileged_userns_clone=1
-        curl https://nixos.org/nix/install | sh
+        curl -L https://nixos.org/nix/install | sh
 	      ;;
       Darwin)
-        curl https://nixos.org/nix/install | sh
+        curl -L https://nixos.org/nix/install | sh
 	      ;;
       rhel|centos)
-        curl https://nixos.org/releases/nix/nix-2.1.3/install | sh
+        curl -L https://nixos.org/releases/nix/nix-2.1.3/install | sh
 	      ;;
       *) ;;
     esac
