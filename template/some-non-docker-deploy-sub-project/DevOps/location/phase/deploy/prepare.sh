@@ -21,19 +21,9 @@ fi
 
 # install third-party dependencies
 case ${THE_DISTRIBUTION_ID} in
-    debian) for MY_DEB_PKG in $(ls ${SCRIPT_ABS_PATH}/non-docker-dependencies/*.deb)
-            do
-                if ! dpkg -s $(echo ${MY_DEB_PKG}|awk -F"_" '{print $1}') > /dev/null 2>&1; then
-                    dpkg -i --force-depends ${SCRIPT_ABS_PATH}/non-docker-dependencies/${MY_DEB_PKG}
-                fi
-            done
-            ;;
-    centos|rhel) for MY_RPM_PKG in $(ls ${SCRIPT_ABS_PATH}/non-docker-dependencies/*.rpm)
-                 do
-                     if ! rpm -q $(basename ${MY_RPM_PKG} '.rpm') > /dev/null 2>&1; then
-                         rpm -i --nodeps ${SCRIPT_ABS_PATH}/non-docker-dependencies/${MY_RPM_PKG}
-                     fi
-                 done
+    debian) install_sub_folder_pkgs "${SCRIPT_ABS_PATH}"/non-docker-dependencies deb
+                 ;;
+    centos|rhel) install_sub_folder_pkgs "${SCRIPT_ABS_PATH}"/non-docker-dependencies rpm
                  ;;
     Darwin) warn "Don't konw how to install packages for MacOs, skip"
             ;;
