@@ -13,7 +13,7 @@ begin_banner "Top level" "prepare"
 
 case ${THE_DISTRIBUTION_ID} in
     rhel) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ] && [ "${THE_DISTRIBUTION_VERSION}" != "8" ] ; then
-	            my_exit "This CI/CD script only supports RHEL 7.x, will abort." 1
+	            my_exit "This CI/CD script only supports RHEL 7.x or 8.x, will abort." 1
           fi
           ;;
     debian) if [ "${THE_DISTRIBUTION_VERSION}" != "9" ] && [ "${THE_DISTRIBUTION_VERSION}" != "10" ]; then
@@ -25,7 +25,7 @@ case ${THE_DISTRIBUTION_ID} in
             fi
             ;;
     centos) if [ "${THE_DISTRIBUTION_VERSION}" != "7" ] && [ "${THE_DISTRIBUTION_VERSION}" != "8" ] ; then
-                my_exit "This CI/CD script only support Centos 7.x, will abort" 1
+                my_exit "This CI/CD script only support Centos 7.x or 8.x, will abort" 1
             fi
             ;;
     Darwin) warn "Please note that MacOS only use as a development environment."
