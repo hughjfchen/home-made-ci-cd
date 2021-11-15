@@ -15,8 +15,8 @@ case ${THE_DISTRIBUTION_ID} in
 	            my_exit "This CI/CD script only supports RHEL 7.x or 8.x, will abort." 1
           fi
           ;;
-    debian) if [ "${THE_DISTRIBUTION_VERSION}" != "9" ] && [ "${THE_DISTRIBUTION_VERSION}" != "10" ]; then
-                my_exit "This CI/CD script only supports debian 9.x and 10.x, will abort" 1
+    debian) if [ "${THE_DISTRIBUTION_VERSION}" != "9" ] && [ "${THE_DISTRIBUTION_VERSION}" != "10" ] && [ "${THE_DISTRIBUTION_VERSION}" != "11" ]; then
+                my_exit "This CI/CD script only supports debian 9.x, 10.x or 11.x, will abort" 1
             fi
             ;;
     ubuntu) if [ "${THE_DISTRIBUTION_VERSION}" != "16.04" ] && [ "${THE_DISTRIBUTION_VERSION}" != "18.04" ] && [ "${THE_DISTRIBUTION_VERSION}" != "20.04" ]; then
